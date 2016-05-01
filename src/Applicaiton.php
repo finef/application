@@ -17,9 +17,11 @@ class Application extends Container
         // set modules definitions and register them
         $this->mod->__invoke($modules)->each()->register($this);
 
-        // run application.bootstrap event
-        $this->event->run((new Event())->setId('application.bootstrap')->setApp($this));
-
+        // run bootstrap event
+        $this->event->run((new Event())->setId('bootstrap')->setApp($this));
+    
+        // terminate
+        $this->event->run((new Event())->setId('terminate')->setApp($this));
     }
 
     /**
