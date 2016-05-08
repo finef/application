@@ -9,9 +9,9 @@ class HttpKernel
     
     protected $event;
 
-    public function __invoke(RequestInterface $request, ResponseInterface $response) 
+    public function __invoke(ServerRequestInterface $request, ResponseInterface $response) 
     {
-        return $this->handle($request, $response);
+        return $this->event()->setRequest($request)->setResponse($response)->run()->getResponse();
     }
     
     public function defineEvent($closure)
@@ -20,15 +20,4 @@ class HttpKernel
         return $this;
     }
     
-    public function handle(RequestInterface $request, ResponseInterface $response)
-    {
-        return $this->event()->setRequest($request)->setResponse($response)->run()->getResponse();
-    }
-    
-    public function helper(RequestInterface $request, ResponseInterface $response)
-    {
-        return $this->handle($request, $response);
-    }
-
-
 }

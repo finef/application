@@ -3,7 +3,8 @@
 namespace \Fine\Application;
 
 use \Fine\Container\Container;
-use \Fine\Event;
+use \Fine\Event\EventDispatcher;
+use \Fine\Event\Event;
 
 class Application extends Container
 {
@@ -20,8 +21,6 @@ class Application extends Container
         // run bootstrap event
         $this->event->run((new Event())->setId('bootstrap')->setApp($this));
     
-        // terminate
-        $this->event->run((new Event())->setId('terminate')->setApp($this));
     }
 
     /**
@@ -39,9 +38,9 @@ class Application extends Container
      *
      * @return \Fine\Event\EventManager
      */
-    protected function _event()
+    protected function _events()
     {
-        return $this->event = new EventDispatcher();
+        return $this->events = new EventDispatcher();
     }
 
 }
