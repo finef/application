@@ -19,7 +19,7 @@ class Application extends Container
         $this->mod->__invoke($modules)->each()->register($this);
 
         // run bootstrap event
-        $this->event->run((new Event())->setId('bootstrap')->setApp($this));
+        $this->event->run((new Event())->setId('bootstrap')->setFine($this));
     
     }
 
