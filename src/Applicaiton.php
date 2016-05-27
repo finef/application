@@ -6,7 +6,7 @@ use \Fine\Container\Container;
 use \Fine\Event\EventDispatcher;
 use \Fine\Event\Event;
 
-class Application extends Container
+class Application extends FineContainer
 {
 
     /**
@@ -14,13 +14,11 @@ class Application extends Container
      */
     public function bootstrap($modules)
     {
-
         // set modules definitions and register them
-        $this->mod->__invoke($modules)->each()->register($this);
+        $this->mod->__invoke($modules)->hooks()->fine->register($this);
 
         // run bootstrap event
-        $this->event->run((new Event())->setId('bootstrap')->setFine($this));
-    
+        $this->event->run((new Event())->setId('fine.bootstrap')->setFine($this));
     }
 
     /**
@@ -38,9 +36,9 @@ class Application extends Container
      *
      * @return \Fine\Event\EventManager
      */
-    protected function _events()
+    protected function _event()
     {
-        return $this->events = new EventDispatcher();
+        return $this->event = new EventDispatcher();
     }
 
 }

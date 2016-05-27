@@ -7,16 +7,17 @@ use \Fine\Container\Container;
 class HttpKernel
 {
     
-    protected $event;
+    protected $_eventFactory;
 
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response) 
     {
-        return $this->event()->setRequest($request)->setResponse($response)->run()->getResponse();
+        $eventFactory = $this->_eventFactory;
+        return $eventFactory()->setRequest($request)->setResponse($response)->run()->getResponse();
     }
     
-    public function defineEvent($closure)
+    public function setEventFactory($closure)
     {
-        $this->event = $closure;
+        $this->_eventFactory = $closure;
         return $this;
     }
     

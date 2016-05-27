@@ -2,21 +2,21 @@
 
 namespace \Fine\Application;
 
-class ModuleManager extends \Fine\Container\Container
+class ModuleManager extends \Fine\Application\FineContainer
 {
     
-    protected $_each;
+    protected $_hooks;
     
-    public function each()
+    public function hooks()
     {
-        if (!$this->_each) {
-            $service = array();
+        if (!$this->_hooks) {
+            $service = [];
             foreach ($this->_definitions as $name => $definition) {
                 $service[$name] = $this->{$name};
             }
-            $this->_each = \Fine\Std\DynamicFacade(array('subject' => $service));
+            $this->_hooks = \Fine\Std\DynamicFacade(['subject' => $service]);
         }
-        return $this->_each;
+        return $this->_hooks;
     }
     
 }
